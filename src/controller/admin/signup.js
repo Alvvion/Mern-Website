@@ -1,12 +1,10 @@
-const User = require('../models/user')
+const User = require('../../models/user')
 
 module.exports = (req, res) => {
     User.findOne({ email: req.body.email }).exec((error, user) => {
         if (user) return res.status(400).json({
-            message: "User Already Exist"
-        })
-
-        console.log(error)
+            message: "Admin Already Exist"
+        });
 
         const {
             firstName,
@@ -20,7 +18,8 @@ module.exports = (req, res) => {
             lastName,
             email,
             password,
-            username: Math.random().toString()
+            username: Math.random().toString(),
+            role: 'admin'
         })
 
         _user.save((error, data) => {
@@ -31,7 +30,7 @@ module.exports = (req, res) => {
             }
             if (data) {
                 return res.status(201).json({
-                    message: "User Created Successfully"
+                    message: "Admin Created Successfully"
                 })
             }
         })
